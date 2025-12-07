@@ -22,7 +22,7 @@ SimpleFilenameToStream = jpype.JClass("util.SimpleFilenameToStream")
 UniqueString = jpype.JClass("util.UniqueString")
 
 
-class ParserException(Exception):
+class ParserSpecObjException(Exception):
     def __init__(self, spec: SpecObj, *args, **kwargs) -> None:
         super().__init__(*args, **kwargs)
         self.spec = spec
@@ -31,6 +31,10 @@ class ParserException(Exception):
             self.errors.append(error)
         for error in self.spec.getSemanticErrors().getErrorDetails():
             self.errors.append(error)
+
+
+class ParserException(Exception):
+    pass
 
 
 class Parser:
@@ -48,7 +52,9 @@ class Parser:
             assert spec.getSemanticErrors().isSuccess()
             return cls(spec)
         except AssertionError as ex:
-            raise ParserException(spec) from ex
+            raise ParserSpecObjException(spec) from ex
+        except Exception as ex:
+            raise ParserException(str(ex)) from ex
 
     def __init__(self, spec: SpecObj) -> None:
         self.spec = spec

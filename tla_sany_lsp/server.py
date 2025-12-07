@@ -3,7 +3,11 @@
 from urllib.parse import urlparse, unquote
 from pygls.lsp.server import LanguageServer
 from lsprotocol import types
-from tla_sany_lsp.parser import Parser, ParserException
+from tla_sany_lsp.parser import (
+    Parser,
+    ParserException,
+    ParserSpecObjException
+)
 
 
 def uri_to_path(uri: str) -> str:
@@ -19,7 +23,7 @@ class TLALanguageServer(LanguageServer):
         try:
             self.parsers[uri] = Parser.create_parser(uri_to_path(uri))
             return []
-        except ParserException as ex:
+        except ParserSpecObjException as ex:
             diags: list[types.Diagnostic] = []
             for error in ex.errors:
                 line0, col0, line1, col1 = (
@@ -36,6 +40,15 @@ class TLALanguageServer(LanguageServer):
                     )
                 )
             return diags
+        except ParserException as ex:
+            return [types.Diagnostic(
+                message=str(ex),
+                severity=types.DiagnosticSeverity.Error,
+                range=types.Range(
+                    start=types.Position(line=0, character=0),
+                    end=types.Position(line=0, character=0),
+                ),
+            )]
 
     def get_parser(self, uri: str) -> Parser:
         if uri not in self.parsers:
