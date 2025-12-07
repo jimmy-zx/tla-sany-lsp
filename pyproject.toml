@@ -1,0 +1,17 @@
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "tla-sany-lsp"
+version = "0.1.0"
+description = "TLA+ Language Server"
+requires-python = ">=3.9"
+
+dependencies = ["pygls", "jpype"]
+
+[project.scripts]
+tla-sany-lsp = "tla_sany_lsp.server:main"
+
+[tool.setuptools.packages.find]
+include = ["tla_sany_lsp"]
