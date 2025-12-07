@@ -7,7 +7,7 @@ from typing import Any
 import jpype
 
 
-jpype.startJVM(classpath=os.getenv("TLA_SANY_LSP_CLASSPATH"))
+jpype.startJVM()
 
 ToolIO = jpype.JClass("util.ToolIO")
 SpecObj = jpype.JClass("tla2sany.modanalyzer.SpecObj")

@@ -16,9 +16,9 @@ pip install -e .
 ```
 
 Download `tla2tools.jar` from [here](https://github.com/tlaplus/tlaplus/releases),
-and set the following environment variable
+and add it to `CLASSPATH`
 ```
-TLA_SANY_LSP_CLASSPATH=[path to tla2tools.jar]
+export CLASSPATH=[path to tla2tools.jar]:$CLASSPATH
 ```
 
 ## Running

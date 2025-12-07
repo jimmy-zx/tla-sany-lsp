@@ -8,7 +8,7 @@ version = "0.1.0"
 description = "TLA+ Language Server"
 requires-python = ">=3.9"
 
-dependencies = ["pygls", "jpype"]
+dependencies = ["pygls", "jpype1"]
 
 [project.scripts]
 tla-sany-lsp = "tla_sany_lsp.server:main"
